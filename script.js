@@ -1,22 +1,27 @@
+// importing WORDS as the correct guesses and dictionary as a list of every single word to check from
+
 import { WORDS } from "./guess.js";
 import { dictionary } from './words.js';
 
-const NUMBER_OF_GUESSES = 6;
-let guessesRemaining = NUMBER_OF_GUESSES;
+let correctWord = WORDS[Math.floor(Math.random() * WORDS.length)]
 let currentGuess = [];
 let nextLetter = 0;
-let rightGuessString = WORDS[Math.floor(Math.random() * WORDS.length)]
+// you can change how many guesses they have available, or make it dynamic through `correctWord.length` for example 
+const guesses = 6;
+let guessesRemaining = guesses;
 
-console.log(rightGuessString)
+// this puts the correct word into the console. once you deploy to production, make sure to remove this!
+console.log(correctWord)
 
-function initBoard() {
+// setting up the layout & canvas
+function wordle() {
     let board = document.getElementById("game-board");
 
-    for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
+    for (let i = 0; i < guesses; i++) {
         let row = document.createElement("div")
         row.className = "letter-row"
         
-        for (let j = 0; j < rightGuessString.length; j++) {
+        for (let j = 0; j < correctWord.length; j++) {
             let box = document.createElement("div")
             box.className = "letter-box"
             row.appendChild(box)
@@ -26,8 +31,9 @@ function initBoard() {
     }
 }
 
-function shadeKeyBoard(letter, color) {
-    for (const elem of document.getElementsByClassName("keyboard-button")) {
+// determining the colour of the keyboard after right or wrong
+function keyboard(letter, color) {
+    for (const elem of document.getElementsByClassName("key")) {
         if (elem.textContent === letter) {
             let oldColor = elem.style.backgroundColor
             if (oldColor === 'green') {
@@ -44,6 +50,7 @@ function shadeKeyBoard(letter, color) {
     }
 }
 
+// removing a letter from the input
 function deleteLetter () {
     let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
     let box = row.children[nextLetter - 1]
@@ -53,16 +60,17 @@ function deleteLetter () {
     nextLetter -= 1
 }
 
+// determining whether it matches our correctWord
 function checkGuess () {
     let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
     let guessString = ''
-    let rightGuess = Array.from(rightGuessString)
+    let rightGuess = Array.from(correctWord)
 
     for (const val of currentGuess) {
         guessString += val
     }
 
-    if (guessString.length != rightGuessString.length) {
+    if (guessString.length != correctWord.length) {
         toastr.error("Not enough letters!")
         return
     }
@@ -72,20 +80,19 @@ function checkGuess () {
         return
     }
 
-    
-    for (let i = 0; i < rightGuessString.length; i++) {
+    // creating the layout of boxes
+    for (let i = 0; i < correctWord.length; i++) {
         let letterColor = ''
         let box = row.children[i]
         let letter = currentGuess[i]
         
         let letterPosition = rightGuess.indexOf(currentGuess[i])
         if (letterPosition === -1) {
-            letterColor = '#3a3a3c';
+            letterColor = '#1a1a1a';
         } else {
             if (currentGuess[i] === rightGuess[i]) {
                 letterColor = '#628b55';
             } else {
-                // shade box yellow
                 letterColor = '#fcba03';
             }
 
@@ -93,15 +100,12 @@ function checkGuess () {
         }
 
         setTimeout(()=> {
-            //flip box
-            animateCSS(box, 'flipInX')
-            //shade box
             box.style.backgroundColor = letterColor
-            shadeKeyBoard(letter, letterColor)
+            keyboard(letter, letterColor)
         })
     }
 
-    if (guessString === rightGuessString) {
+    if (guessString === correctWord) {
         toastr.success("You guessed right! Game over!")
         guessesRemaining = 0
         return
@@ -111,45 +115,28 @@ function checkGuess () {
         nextLetter = 0;
 
         if (guessesRemaining === 0) {
-            toastr.info(`Game over! The right word was: "${rightGuessString}"`)
+            toastr.info(`Game over! The right word was: "${correctWord}"`)
         }
     }
 }
 
+// adding letters based on what letter is clicked / typed
 function insertLetter (pressedKey) {
-    if (nextLetter === rightGuessString.length) {
+    if (nextLetter === correctWord.length) {
         return
     }
     pressedKey = pressedKey.toLowerCase()
 
-    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
+		// the row that is being typed is determined by the number of guesses remaining
+    let row = document.getElementsByClassName("letter-row")[guesses - guessesRemaining]
     let box = row.children[nextLetter]
-    animateCSS(box, "pulse")
     box.textContent = pressedKey
     box.classList.add("filled-box")
     currentGuess.push(pressedKey)
     nextLetter += 1
 }
 
-const animateCSS = (element, animation, prefix = 'animate__') =>
-
-  new Promise((resolve, reject) => {
-    const animationName = `${prefix}${animation}`;
-
-    const node = element
-    node.style.setProperty('--animate-duration', '0s');
-    
-    node.classList.add(`${prefix}animated`, animationName);
-
-    function handleAnimationEnd(event) {
-      event.stopPropagation();
-      node.classList.remove(`${prefix}animated`, animationName);
-      resolve('Animation ended');
-    }
-
-    node.addEventListener('animationend', handleAnimationEnd, {once: true});
-});
-
+// determining what key is pressed bassed on its layout
 document.addEventListener("keyup", (e) => {
 
     if (guessesRemaining === 0) {
@@ -166,7 +153,7 @@ document.addEventListener("keyup", (e) => {
         checkGuess()
         return
     }
-
+	// allowing any key from a-z or the '-' using regex'
     let found = pressedKey.match(/[a-z\-]/gi)
     if (!found || found.length > 1) {
         return
@@ -175,10 +162,11 @@ document.addEventListener("keyup", (e) => {
     }
 })
 
-document.getElementById("keyboard-cont").addEventListener("click", (e) => {
+// pushing everything to the keyboard in index.html
+document.getElementById("keyboard").addEventListener("click", (e) => {
     const target = e.target
     
-    if (!target.classList.contains("keyboard-button")) {
+    if (!target.classList.contains("key")) {
         return
     }
     let key = target.textContent
@@ -190,4 +178,4 @@ document.getElementById("keyboard-cont").addEventListener("click", (e) => {
     document.dispatchEvent(new KeyboardEvent("keyup", {'key': key}))
 })
 
-initBoard();
+wordle();

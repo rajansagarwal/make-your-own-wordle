@@ -6,9 +6,10 @@ body {
 	font-family: 'Hind Siliguri', sans-serif;
 }
 
-.ye {
+.bolded {
 	color: white;
 }
+
 h1, h4 {
  text-align: center;
 padding-bottom: 0;
@@ -26,35 +27,43 @@ h4 {
 }
 
 .letter-box {
-  border: 2px solid gray;
+  border: 2px solid rgb(58, 58, 60);
+	background-color:  rgb(58, 58, 60);
   border-radius: 3px;
-  margin: 2px;
+  margin: 3px;
   font-size: 2.5rem;
   font-weight: 700;
-  height: 3.5rem;
-  width: 3.5rem;
+  height: 3rem;
+  width: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
 }
 
+@media (max-width: 700px) {
+	.letter-box {
+		height: 2rem;
+		width: 2rem;
+	}
+}
+
 .filled-box {
-  border: 2px solid gray;
+  border: 2px solid #1a1a1a;
 }
 
 .letter-row {
   display: flex;
 }
 
-#keyboard-cont {
+#keyboard {
   margin: 1rem 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#keyboard-cont div {
+#keyboard div {
   display: flex;
 }
 
@@ -62,15 +71,30 @@ h4 {
   margin: 0.5rem 0;
 }
 
-.keyboard-button {
+.key {
   font-size: 1rem;
   font-weight: 700;
   padding: 0.7rem;
 	background-color: rgb(58, 58, 60);
 	color: white;
 	border: none;
-	border-radius: 5px;
+	border-radius: 6px;
   margin: 0 2px;
   cursor: pointer;
   text-transform: uppercase;
 }
+
+.watermark {
+position: fixed;
+color: black;
+background-color: white;
+right: 10px;
+bottom: 10px;
+padding: 2px 7px;
+border: 1px solid white;
+border-radius: 5px;
+font-size: 12px;
+line-height: 24px;
+text-decoration: none;
+font-weight: 500;
+	}
