@@ -1,14 +1,14 @@
 // importing WORDS as the correct guesses and dictionary as a list of every single word to check from
 
-import { WORDS } from "./guess.js";
-import { dictionary } from './words.js';
+import { words } from "./guess.js";
+import { dictionary } from 'https://file.heyrajan.com/dictionary.js'
 
-let correctWord = WORDS[Math.floor(Math.random() * WORDS.length)]
+let correctWord = words[Math.floor(Math.random() * words.length)]
 let currentGuess = [];
 let nextLetter = 0;
 // you can change how many guesses they have available, or make it dynamic through `correctWord.length` for example 
 const guesses = 6;
-let guessesRemaining = guesses;
+let remaining = guesses;
 
 // this puts the correct word into the console. once you deploy to production, make sure to remove this!
 console.log(correctWord)
@@ -51,18 +51,18 @@ function keyboard(letter, color) {
 }
 
 // removing a letter from the input
-function deleteLetter () {
-    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
+function deleting () {
+    let row = document.getElementsByClassName("letter-row")[6 - remaining]
     let box = row.children[nextLetter - 1]
     box.textContent = ""
     box.classList.remove("filled-box")
     currentGuess.pop()
-    nextLetter -= 1
+    nextLetter--;
 }
 
 // determining whether it matches our correctWord
 function checkGuess () {
-    let row = document.getElementsByClassName("letter-row")[6 - guessesRemaining]
+    let row = document.getElementsByClassName("letter-row")[6 - remaining]
     let guessString = ''
     let rightGuess = Array.from(correctWord)
 
@@ -75,7 +75,7 @@ function checkGuess () {
         return
     }
 
-    if (!dictionary.includes(guessString)) {
+    if (!dictionary.includes(guessString) && !words.includes(guessString)) {
         toastr.error("Word not in list!")
         return
     }
@@ -106,59 +106,60 @@ function checkGuess () {
     }
 
     if (guessString === correctWord) {
-        toastr.success("You guessed right! Game over!")
-        guessesRemaining = 0
+        toastr.success("Congratulations — You Win!")
+        remaining = 0
         return
     } else {
-        guessesRemaining -= 1;
+        remaining--;
         currentGuess = [];
         nextLetter = 0;
 
-        if (guessesRemaining === 0) {
-            toastr.info(`Game over! The right word was: "${correctWord}"`)
+        if (remaining === 0) {
+            toastr.info(`Incorrect! The right word was: "${correctWord}"`)
         }
     }
 }
 
 // adding letters based on what letter is clicked / typed
-function insertLetter (pressedKey) {
+function insertLetter (clicked) {
     if (nextLetter === correctWord.length) {
         return
     }
-    pressedKey = pressedKey.toLowerCase()
+    clicked = clicked.toLowerCase()
 
 		// the row that is being typed is determined by the number of guesses remaining
-    let row = document.getElementsByClassName("letter-row")[guesses - guessesRemaining]
+    let row = document.getElementsByClassName("letter-row")[guesses - remaining]
     let box = row.children[nextLetter]
-    box.textContent = pressedKey
+    box.textContent = clicked
     box.classList.add("filled-box")
-    currentGuess.push(pressedKey)
+    currentGuess.push(clicked)
     nextLetter += 1
 }
 
 // determining what key is pressed bassed on its layout
 document.addEventListener("keyup", (e) => {
 
-    if (guessesRemaining === 0) {
+    if (remaining === 0) {
         return
     }
 
-    let pressedKey = String(e.key)
-    if (pressedKey === "Backspace" && nextLetter !== 0) {
-        deleteLetter()
+    let clicked = String(e.key)
+    if (clicked === "Backspace" && nextLetter !== 0) {
+        deleting()
         return
     }
 
-    if (pressedKey === "Enter") {
+    if (clicked === "Enter") {
         checkGuess()
         return
     }
 	// allowing any key from a-z or the '-' using regex'
-    let found = pressedKey.match(/[a-z\-]/gi)
+	// if you want to allow numbers, then change it to (/[a-z\-\0-9]/gi)
+    let found = clicked.match(/[a-z\-]/gi)
     if (!found || found.length > 1) {
         return
     } else {
-        insertLetter(pressedKey)
+        insertLetter(clicked)
     }
 })
 
