@@ -1,5 +1,3 @@
-// hello, i'm just implementing some local storage stuff
-
 import { words } from './guess.js';
 import { dictionary } from 'https://file.heyrajan.com/dictionary.js'
 
