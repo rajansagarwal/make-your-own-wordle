@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <link href="https://api.fontshare.com/css?f[]=bespoke-serif@700,800&f[]=clash-display@400&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAHOOO Wordle Template</title>
+	<link href="https://www.nytimes.com/games/wordle/images/NYT-Wordle-Icon-32.png" rel="icon shortcut" sizes="3232" />
+    <title>Workshop WORDLE</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
@@ -12,75 +14,80 @@
 </head>
 <body><br/>
 	 <!-- Here, you can update the title & subtitle -->
-    <h1> <span class="bolded">wordle </span>template</h1>
-	 	<h4>Wordle but [whatever you want!] Use "-" to emulate spaces</h4>
+    <h1> <span class="bolded">TEMPLATE </span>WORDLE</h1>
+	 	<h4>Wordle but :))</h4>
     <br/>
-    <div id="game-board">
-
+    <div id="game-board">	<br/><br/>
     </div>
 
-	<br/><br/>
-<!-- All the keys for the keyboard! If you want to add a character, add it to its row and escape the key in script.js -->
-    <div id="keyboard">
-			<!-- 
-			 <div class="row">
-            <button class="key">1</button>
-            <button class="key">2</button>
-            <button class="key">3</button>
-            <button class="key">4</button>
-            <button class="key">5</button>
-            <button class="key">6</button>
-            <button class="key">7</button>
-            <button class="key">8</button>
-            <button class="key">9</button>
-            <button class="key">0</button>
-        </div>
-			-->
-        <div class="row">
-            <button class="key">q</button>
-            <button class="key">w</button>
-            <button class="key">e</button>
-            <button class="key">r</button>
-            <button class="key">t</button>
-            <button class="key">y</button>
-            <button class="key">u</button>
-            <button class="key">i</button>
-            <button class="key">o</button>
-            <button class="key">p</button>
-        </div>
-        <div class="row">
-            <button class="key">a</button>
-            <button class="key">s</button>
-            <button class="key">d</button>
-            <button class="key">f</button>
-            <button class="key">g</button>
-            <button class="key">h</button>
-            <button class="key">j</button>
-            <button class="key">k</button>
-            <button class="key">l</button>
-					  <button class="key">-</button>
-        </div>
-        <div class="row">
-            <button class="key">Del</button>
-            <button class="key">z</button>
-            <button class="key">x</button>
-            <button class="key">c</button>
-            <button class="key">v</button>
-            <button class="key">b</button>
-            <button class="key">n</button>
-            <button class="key">m</button>
-            <button class="key">Enter</button>
-        </div>
+	<div id="button-container">
+        <center>
+            <br />
+        <button class="copy" onclick="copy();">Copy Results to Clipboard</button>
+        <br />
+            </center>
+        <h1><span id="emoji"></span></h1>
+       <!-- <center>
+        <img id="emoji-image" src="https://e.benjaminsmith.dev/melody-p" />
+        </center>-->
     </div>
 
-<!-- Watermark -->
-</div><a target="_new" class="watermark" href="https://replit.com/@rajnagrwl/make-your-own-wordle">Fork this on Replit!</a>
+	<div id="keyboard">
+		<div class="row">
+			<button class="key">1</button>
+			<button class="key">2</button>
+			<button class="key">3</button>
+			<button class="key">4</button>
+			<button class="key">5</button>
+			<button class="key">6</button>
+			<button class="key">7</button>
+			<button class="key">8</button>
+			<button class="key">9</button>
+			<button class="key">0</button>
+			<button class="key">*</button>
+		</div>
+		<div class="row">
+			<button class="key">q</button>
+			<button class="key">w</button>
+			<button class="key">e</button>
+			<button class="key">r</button>
+			<button class="key">t</button>
+			<button class="key">y</button>
+			<button class="key">u</button>
+			<button class="key">i</button>
+			<button class="key">o</button>
+			<button class="key">p</button>
+		</div>
+		<div class="row">
+			<button class="key">a</button>
+			<button class="key">s</button>
+			<button class="key">d</button>
+			<button class="key">f</button>
+			<button class="key">g</button>
+			<button class="key">h</button>
+			<button class="key">j</button>
+			<button class="key">k</button>
+			<button class="key">l</button>
+			<button class="key">-</button>
+		</div>
+		<div class="row">
+			<button class="key">Del</button>
+			<button class="key">z</button>
+			<button class="key">x</button>
+			<button class="key">c</button>
+			<button class="key">v</button>
+			<button class="key">b</button>
+			<button class="key">n</button>
+			<button class="key">m</button>
+			<button class="key">Enter</button>
+		</div>
+	</div>
 
 <script
 src="https://code.jquery.com/jquery-3.6.0.min.js"
 integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-<script src="script.js" type="module"></script>
+<script src="stored.js" type="module"></script>
 </body>
 </html>
