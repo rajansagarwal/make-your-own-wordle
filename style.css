@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500&display=swap');
+ @import url('https://fonts.googleapis.com/css2?family=Arimo:wght@700&display=swap');
 
 body {
 	background: black;
 	color: white;
-	font-family: 'Hind Siliguri', sans-serif;
+	font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", 'Arimo', sans-serif;
 }
 
 .bolded {
@@ -31,20 +32,45 @@ h4 {
 	background-color:  rgb(58, 58, 60);
   border-radius: 3px;
   margin: 3px;
-  font-size: 2.5rem;
+  font-size: 2.3rem;
   font-weight: 700;
-  height: 3rem;
-  width: 3rem;
+  height: 3.3rem;
+  width: 3.3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: uppercase;
+    
+
 }
+.letter-box.typed-in-active {
+    animation: play .1s steps(10) forwards;
+  border: 2px solid rgb(93, 93, 96);
+
+}
+.letter-box.complete {
+  animation: flip2 .5s forwards!important;
+}
+@keyframes flip2 {
+    
+    0% {
+      transform: rotateY(0);
+    }
+    50% {
+      transform: rotateY(-90deg);
+			opacity: 0%;
+    }
+    99% {
+      transform: rotateY(0);
+    }
+}
+
 
 @media (max-width: 700px) {
 	.letter-box {
-		height: 2rem;
-		width: 2rem;
+		height: 1.5rem;
+		width: 1.5rem;
+        font-size: 1.2rem;
 	}
 }
 
@@ -54,6 +80,19 @@ h4 {
 
 .letter-row {
   display: flex;
+    position: relative;
+}
+
+#keyboard, #keyboard *, #game-board, #game-board * {
+          -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+	font-family: 'Arimo', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", sans-serif;
+
 }
 
 #keyboard {
@@ -98,3 +137,25 @@ line-height: 24px;
 text-decoration: none;
 font-weight: 500;
 	}
+
+#button-container {
+    display: none;
+}
+#button-container.show {
+    display: block;
+}
+
+button.copy {
+    border-radius: 12px;
+    background-color: rgb(30, 30, 30);
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button.copy:hover {
+    background-color: rgb(30, 30, 31);
+}
